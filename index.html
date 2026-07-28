@@ -2,18 +2,17 @@
 <title>go-datetime</title><link rel=icon href="https://raw.githubusercontent.com/go-datetime/brand/main/logo/go-datetime.svg">
 <style>
 :root{--bg:#fff;--fg:#0A2540;--mut:#425466;--card:#f6f9fc;--bd:#e3e8ee;--acc:#0079A8}
-:root[data-theme=dark],@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0A1929;--fg:#e7edf3;--mut:#9fb3c8;--card:#0f2438;--bd:#1e3a52;--acc:#22CCE2}}
+:root.dark{--bg:#0A1929;--fg:#e7edf3;--mut:#9fb3c8;--card:#0f2438;--bd:#25405c;--acc:#22CCE2}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
 .wrap{max-width:820px;margin:0 auto;padding:48px 24px}
-img.banner{width:100%;max-width:720px;display:block;margin:0 auto 8px}
-p.lead{color:var(--mut);font-size:1.15rem;text-align:center;max-width:640px;margin:0 auto 40px}
+img.banner{width:100%;max-width:720px;display:block;margin:0 auto 8px;border-radius:16px}
+p.lead{color:var(--mut);font-size:1.15rem;text-align:center;max-width:640px;margin:32px auto 40px}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px 24px;margin:16px 0}
 .card h3{margin:0 0 6px}.card a{color:var(--acc);text-decoration:none;font-weight:700}.card p{margin:0;color:var(--mut)}
-.badges{text-align:center;margin:24px 0}.badges img{margin:0 4px}
 footer{text-align:center;color:var(--mut);font-size:.9rem;margin-top:48px}
 #tt{position:fixed;top:14px;right:14px;background:var(--card);border:1px solid var(--bd);color:var(--fg);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:.85rem}
 </style></head><body>
-<button id=tt title="Toggle theme">◐ theme</button>
+<button id=tt title="Toggle theme">◐ system</button>
 <div class=wrap>
 <img class=banner src="https://raw.githubusercontent.com/go-datetime/brand/main/social/go-datetime.png" alt="go-datetime">
 <p class=lead>Lenient real-world date/time parsing for Go — one shared library for the messy wire-date format zoo, so every consumer stops reinventing its own layout table.</p>
@@ -21,8 +20,10 @@ footer{text-align:center;color:var(--mut);font-size:.9rem;margin-top:48px}
 <footer>Pure-Go · CGO_ENABLED=0 · BSD-3-Clause · 100%-tested · 9-arch CI · part of the go-* fleet</footer>
 </div>
 <script>
-const r=document.documentElement,k='theme',o=['system','light','dark'];
+const r=document.documentElement,k='theme',o=['system','light','dark'],mq=matchMedia('(prefers-color-scheme:dark)');
 let i=Math.max(0,o.indexOf(localStorage.getItem(k)||'system'));
-function ap(){const t=o[i];if(t==='system')r.removeAttribute('data-theme');else r.setAttribute('data-theme',t);document.getElementById('tt').textContent='◐ '+t}
-ap();document.getElementById('tt').onclick=()=>{i=(i+1)%3;localStorage.setItem(k,o[i]);ap()};
+const isDark=t=>t==='dark'||(t==='system'&&mq.matches);
+function ap(){const t=o[i];r.classList.toggle('dark',isDark(t));document.getElementById('tt').textContent='◐ '+t}
+mq.addEventListener('change',ap);ap();
+document.getElementById('tt').onclick=()=>{i=(i+1)%3;localStorage.setItem(k,o[i]);ap()};
 </script></body></html>
